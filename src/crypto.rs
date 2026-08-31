@@ -117,21 +117,11 @@ mod sha256 {
     }
 }
 
-mod FNDSA512rs {
+mod fndsa512rs {
     use falcon::prelude::*;
-    use rand::{SeedableRng, TryRng, rngs::StdRng};
     use crate::crypto::*;
     pub struct FNDSA512 {}
 
-    impl FNDSA512 {
-        fn random_bytes(buffer: &mut [u8]) -> Result<(), CryptoError> {
-            let mut rng = rand::rngs::StdRng::try_from_rng(&mut rand::rngs::SysRng).map_err(|e| CryptoError::SystemError)?;
-            rng.try_fill_bytes(buffer).map_err(|e| CryptoError::SystemError)?;
-            Ok(())
-        }
-
-        
-    }
 
     impl SigningAlgorithm for FNDSA512 {
         fn new_keypair() -> Result<Keypair, CryptoError> {
@@ -226,4 +216,4 @@ mod mlkem {
 
 pub use mlkem::MLKEM768;
 pub use sha256::SHA256;
-pub use FNDSA512rs::FNDSA512;
+pub use fndsa512rs::FNDSA512;

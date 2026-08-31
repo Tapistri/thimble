@@ -7,10 +7,12 @@ mod tests {
 
 use crate::crypto::{self, KeyExchangeAlgorithm, SigningAlgorithm, DigestAlgorithm};
     use crate::certificates::{UTCTime, ValidityPeriod, Signature, Digest, IdentityCertificate, SigningKey, SignatureAlgorithm, DigestAlgorithm as DA, KeyExchangeAlgorithm as KEA};
+    
     #[test]
     fn some_test() {
         assert!(true);
     }
+
     #[test]
     fn create_identity() {
         let keys = crypto::FNDSA512::new_keypair().ok().expect("failed to generate keypair");
