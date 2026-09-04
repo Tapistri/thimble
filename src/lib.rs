@@ -1,12 +1,10 @@
-mod certificates;
-mod crypto;
-
+mod internal;
+mod identity;
 #[cfg(test)]
 mod tests {
     use std::fs;
-
-use crate::crypto::{self, KeyExchangeAlgorithm, SigningAlgorithm, DigestAlgorithm};
-    use crate::certificates::{UTCTime, ValidityPeriod, Signature, Digest, IdentityCertificate, SigningKey, SignatureAlgorithm, DigestAlgorithm as DA, KeyExchangeAlgorithm as KEA};
+    use crate::internal::crypto::{self, KeyExchangeAlgorithm, SigningAlgorithm, DigestAlgorithm};
+    use crate::internal::certificates::{UTCTime, ValidityPeriod, Signature, Digest, IdentityCertificate, SigningKey, SignatureAlgorithm, DigestAlgorithm as DA, KeyExchangeAlgorithm as KEA};
     
     #[test]
     fn some_test() {

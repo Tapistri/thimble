@@ -1,4 +1,4 @@
-use crate::certificates::KeyExchangeAlgorithm::MlKem768;
+use crate::internal::certificates::KeyExchangeAlgorithm::MlKem768;
 
 pub trait SigningAlgorithm {
     fn new_keypair() -> Result<Keypair, CryptoError>;
@@ -104,7 +104,7 @@ pub trait DigestAlgorithm {
 
 mod sha256 {
     use sha2::{Sha256, Digest};
-    use crate::crypto::DigestAlgorithm;
+    use crate::internal::crypto::DigestAlgorithm;
 
     pub struct SHA256 {}
 
@@ -119,7 +119,7 @@ mod sha256 {
 
 mod fndsa512rs {
     use falcon::prelude::*;
-    use crate::crypto::*;
+    use crate::internal::crypto::*;
     pub struct FNDSA512 {}
 
 
@@ -153,7 +153,7 @@ mod mlkem {
     use libcrux_ml_kem::{mlkem768::MlKem768PublicKey, *};
     use libcrux_ml_kem::KEY_GENERATION_SEED_SIZE;
     use rand::{SeedableRng, TryRng};
-    use crate::crypto::*;
+    use crate::internal::crypto::*;
 
     fn random_bytes(buffer: &mut [u8]) -> Result<(), CryptoError> {
         let mut rng = rand::rngs::StdRng::try_from_rng(&mut rand::rngs::SysRng).map_err(|e| CryptoError::SystemError)?;

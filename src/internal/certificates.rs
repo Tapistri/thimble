@@ -127,7 +127,7 @@ pub enum HistoricalKeychainRecords {
 
 #[derive(AsnType, Decode, Encode)]
 #[rasn(automatic_tags)]
-pub struct HistoricalKeychainCertificate {
+pub struct IdentitiyKeychainCertificate {
     pub tbs_keychain_identifier: KeychainIdentifer,
     pub client_signature: Signature,
     pub instance_signature: Signature,
