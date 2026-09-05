@@ -7,9 +7,16 @@ homepage = "https://tapistri.chat"
 repository = "https://github.com/Tapistri/thimble"
 
 [dependencies]
+blake3 = "1.8.7"
+chrono = "0.4.45"
 falcon-rs = "0.2.5"
 getrandom = { version = "0.4.3", features = ["wasm_js"] }
 libcrux-ml-kem = "0.0.10"
 rand = "0.10.2"
 rasn = "0.28.14"
 sha2 = "0.11.0"
+
+
+[lints.clippy]
+unwrap_used = "deny"  
+expect_used = "warn" 
