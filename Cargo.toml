@@ -23,3 +23,6 @@ sha2 = "0.11.0"
 [lints.clippy]
 unwrap_used = "deny"
 expect_used = "warn"
+
+[build-dependencies]
+cbindgen = "0.29.4"
