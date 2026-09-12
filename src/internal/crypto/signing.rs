@@ -2,7 +2,10 @@
 
 use libcrux_ml_kem::mlkem768::avx2::unpacked::public_key;
 
-use crate::internal::crypto::{PrivateBytes, SignatureAlgorithm, ZeroedDropBytes, keys::Keystore};
+use crate::internal::crypto::{
+    PrivateBytes, SignatureAlgorithm, ZeroedDropBytes,
+    keys::{Keypair, SerializableKeypair},
+};
 
 #[derive(Debug)]
 pub enum SignatureError {
@@ -11,48 +14,7 @@ pub enum SignatureError {
     InvalidSignature,
 }
 
-/**
-    Represents a partially serialized set of keys,
-    the private key is optional, but the public key is required
-*/
-
-pub struct Keypair {
-    pub private_key: Option<PrivateBytes>,
-    pub public_key: Vec<u8>,
-}
-
-impl Keypair {
-    pub fn has_private_key(&self) -> bool {
-        self.private_key.is_some()
-    }
-
-    pub fn new_public(public_key: &[u8]) -> Keypair {
-        Keypair {
-            private_key: None,
-            public_key: public_key.into(),
-        }
-    }
-
-    pub fn new_private(privatekey: &mut [u8], publickey: &[u8]) -> Keypair {
-        Keypair {
-            private_key: Some(PrivateBytes::new(privatekey)),
-            public_key: publickey.into(),
-        }
-    }
-}
-
-pub trait SerializableKeypair {
-    fn serialize(&self) -> Keypair;
-    /**
-        Deserializes the given key. Note that an `Some` value doesn't
-        necessarily mean the provided bytes are a valid key.
-    */
-    fn deserialize(bytes: Keypair) -> Option<Self>
-    where
-        Self: Sized;
-}
-
-pub trait SigningKey: SerializableKeypair {
+pub trait SigningKey: SerializableKeypair + VerifyKey {
     fn sign(&self, data: &[u8]) -> Result<Vec<u8>, SignatureError>;
     fn new_verify_key(&self) -> Result<Box<dyn VerifyKey>, SignatureError>;
 }
@@ -75,7 +37,7 @@ pub fn deserialize_verifykey(
 pub fn deserialize_signingkey(
     keys: Keypair,
     algorithm: &SignatureAlgorithm,
-) -> Option<Box<dyn VerifyKey>> {
+) -> Option<Box<dyn SigningKey>> {
     if !keys.has_private_key() {
         return None;
     }

@@ -3,7 +3,7 @@ use rasn::prelude::*;
 
 use crate::internal::crypto::DigestAlgorithm;
 use crate::internal::crypto::SignatureAlgorithm;
-use crate::internal::crypto::signing::Keypair;
+use crate::internal::crypto::keys::Keypair;
 use crate::internal::crypto::signing::VerifyKey;
 use crate::internal::crypto::signing::deserialize_signingkey;
 
